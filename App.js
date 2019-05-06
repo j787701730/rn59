@@ -6,19 +6,82 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import HomeScreen from './pages/home';
-// import {Platform, StyleSheet, Text, View} from 'react-native';
-import {createStackNavigator, createAppContainer} from "react-navigation";
+import React, {Component} from "react";
+import HomeScreen from "./pages/home";
+import My from "./pages/my";
+import Find from "./pages/find";
+import SongList from './pages/songList';
 
-const AppNavigator = createStackNavigator({
-    Home: {
-      screen: HomeScreen
+import {
+  createStackNavigator,
+  createAppContainer,
+  createMaterialTopTabNavigator
+} from "react-navigation";
+import Icon from "react-native-vector-icons/RNIMigration";
+
+const Tab = createMaterialTopTabNavigator(
+  {
+    My: {
+      screen: My,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: "我的",
+        tabBarIcon: ({focused, tintColor}) => (
+          <Icon name="ios-contacts-outline" size={30} color={tintColor}/>
+        )
+      })
+    },
+    Find: {
+      screen: Find,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: "发现",
+        tabBarIcon: ({focused, tintColor}) => (
+          <Icon name="ios-contacts-outline" size={30} color={tintColor}/>
+        )
+      })
     }
   },
   {
-    initialRouteName: "Home"
-  });
+    initialRouteName: "Find",
+    backBehavior: "none",
+    swipeEnabled: true,
+    animationEnabled: true,
+    lazy: true,
+    tabBarOptions: {
+      activeTintColor: "#333333",
+      inactiveTintColor: "#999999",
+      style: {
+        backgroundColor: "#ffffff",
+        border: "none"
+      },
+      tabStyle: {
+        border: "none"
+      },
+      indicatorStyle: {
+        width: 0
+      }
+    }
+  }
+);
+
+const AppNavigator = createStackNavigator(
+  {
+    Tab: {
+      screen: Tab,
+      navigationOptions: ({navigation}) => ({
+        header: null
+      })
+    },
+    Home: {
+      screen: HomeScreen
+    },
+    SongList: {
+      screen: SongList
+    }
+  },
+  {
+    initialRouteName: "Tab"
+  }
+);
 
 export default createAppContainer(AppNavigator);
 // const instructions = Platform.select({
