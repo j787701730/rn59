@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, Image, Dimensions, ScrollView} from "react-native";
+import {View, Text, Image, Dimensions, ScrollView, Button} from "react-native";
 // import Video from "react-native-video";
 import {SafeAreaView} from "react-navigation";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -32,7 +32,6 @@ export default class SongList extends React.Component {
   };
 
   playMusic = (song) => {
-    console.log('222');
     this.props.navigation.state.params.playMusic(song);
   };
 
@@ -55,10 +54,8 @@ export default class SongList extends React.Component {
               <View style={{paddingLeft: 10}}>
                 <Image style={{width: 100, height: 100}} source={{uri: songList['songListPic']}}/>
               </View>
-              <View>
-                <Text onPress={this.playMusic.bind(this, songList.songs)}>
-                  播放全部
-                </Text>
+              <View style={{paddingLeft: 10, marginTop: 5, marginBottom: 5}}>
+                <Button onPress={this.playMusic.bind(this, songList.songs)} title={'播放全部'}/>
               </View>
               <View>
                 {songList.songs.map((song, i) => {

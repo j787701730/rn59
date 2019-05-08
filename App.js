@@ -7,15 +7,21 @@
  */
 
 import React, {Component} from "react";
+import {View, AppRegistry} from 'react-native'
 import HomeScreen from "./pages/home";
 import My from "./pages/my";
 import Find from "./pages/find";
 import SongList from './pages/songList';
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import reducer from "./pages/redux/reducer";
+
+const store = createStore(reducer);
 
 import {
   createStackNavigator,
   createAppContainer,
-  createMaterialTopTabNavigator
+  createMaterialTopTabNavigator,
 } from "react-navigation";
 import Icon from "react-native-vector-icons/RNIMigration";
 
@@ -83,7 +89,26 @@ const AppNavigator = createStackNavigator(
   }
 );
 
-export default createAppContainer(AppNavigator);
+
+let Navigation = createAppContainer(AppNavigator);
+
+// Render the app container component with the provider around it
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    );
+  }
+}
+
+
+
+// export default createAppContainer(NeteaseCloudMusic);
+// AppRegistry.registerComponent('rn59', () => NeteaseCloudMusic);
+
+
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
 //   android:
